@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple-Vue</title>
+</head>
+    <script type="text/javascript"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.js"></script>
+    <script src="../css/index.css"></script>
+<body>
+<div id="example-2">
+  <form method="post">
+    name:<input type="text" name="name">
+    <button type="submit">提交</button>
+  </form>
+</div>
+</body>
+<script>
+  new Vue({
+    el: '#example-2',
+    data: {
+      show: true
+    }
+  })
+</script>
+</html>
