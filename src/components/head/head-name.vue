@@ -4,9 +4,21 @@
         <li v-for="i in headName">
             {{i.name}}
         </li>
-        <li>
-            <button v-on:click="aa">aa</button>
-        </li>
+        <div>
+            <el-button type="danger" v-on:click="aaa">aa</el-button>
+        </div>
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+        align="left">
+        <el-input v-model="diaValue" placeholder="diaValue" style="width:80%"></el-input>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
 </template>
 
@@ -16,8 +28,14 @@
         props: ['headName'],
         methods: {
             aaa: function () {
-                alert("111")
+                this.dialogVisible=true
             }
+        },
+        data() {
+          return{
+            dialogVisible: false,
+            diaValue: ""
+          }
         }
     }
 </script>

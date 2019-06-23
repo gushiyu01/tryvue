@@ -1,72 +1,76 @@
 <template>
   <div class="hello">
     <h1 v-if="flag">{{ msg }}</h1>
-    <button v-on:click="change">change</button>
-    <form>
-      name:<input v-model="username" placeholder="">
-      age:<input v-model="age" placeholder="age">
-      <button v-on:click="submit">submit</button>
-    </form>
+    <el-button type="primary"  v-on:click="change">change</el-button>
+    <br/>
+    <label>name:</label><el-input v-model="username" placeholder="name" style="width:10%"></el-input>
+    <label>age:</label><el-input v-model="age" placeholder="age" style="width:10%"></el-input>
+    <el-button type="primary" v-on:click="submm">submit</el-button>
+
 
     <h1>待完成事件</h1>
-    <table class="tb1">
-
-      <tr>
-        <td>
-          <input type="radio">
-        </td>
-        <td>序号</td>
-        <td>名字</td>
-        <td>年龄</td>
-        <td>操作</td>
-      </tr>
-      <tr v-for="(i,index) in items" v-bind:key="i.id">
-        <td>
-          <input type="radio">
-        </td>
-        <td>{{index}}</td>
-        <td>{{i.username}}</td>
-        <td>{{i.age}}</td>
-        <td>
-          <button v-on:click="finish(i,index)">finish</button>
-        </td>
-        <!--<td>-->
-          <!--<button v-on:click="remove(index)">remove</button>-->
-        <!--</td>-->
-      </tr>
-    </table>
-    <button v-on:click="clearitems" class="clearitems">清空待完成事件</button>
+    <el-table
+      :data="items"
+      height="250"
+      border
+      style="width: 50%;margin: auto">
+      <el-table-column
+        type="selection"
+        width="55"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="username"
+        label="姓名"
+        width="180"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="age"
+        label="年龄"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        label="操作"
+        align="center">
+        <template slot-scope="scope">
+        <el-button type="primary"  v-on:click="finish(scope.$index, scope.row)">finish</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button type="primary"  v-on:click="clearitems" class="clearitems">清空已选中待完成事件</el-button>
     <h1>已完成事件</h1>
-    <table class="tb1">
-      <tr>
-        <td>
-          <input type="checkbox" @click="chooseall()" class='input-checkbox' :checked="this.delarry.length===this.enditems.length && this.delarry.length>0">
-        </td>
-        <td>序号</td>
-        <td>名字</td>
-        <td>年龄</td>
-        <td>操作</td>
-      </tr>
-      <tr v-for="(i,index) in enditems" v-bind:key="i.id">
-        <td>
-          <input type="checkbox" @click='chooseed(i.username)' class='input-checkbox' :checked="delarry.indexOf(i.age)>=0">
-        </td>
-        <td>{{index}}</td>
-        <td>{{i.username}}</td>
-        <td>{{i.age}}</td>
-        <!--<td>-->
-          <!--<button v-on:click="finish(i)">finish</button>-->
-        <!--</td>-->
-        <td>
-          <button v-on:click="remove(i, index)">remove</button>
-        </td>
-      </tr>
-    </table>
-    <button v-on:click="clearenditems" class="clearitems">清空已完成事件</button>
+    <el-table
+      :data="enditems"
+      height="250"
+      border
+      style="width: 50%;margin: auto">
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
+      <el-table-column
+        prop="username"
+        label="姓名"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="age"
+        label="年龄">
+      </el-table-column>
+      <el-table-column
+        label="操作">
+        <template slot-scope="scope">
+          <el-button type="primary"  v-on:click="remove(scope.$index, scope.row)">remove</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-button type="primary"  v-on:click="clearenditems" class="clearitems">清空已完成事件</el-button>
 
     <head-name v-bind:headName="names"/>
 
-    <button @click="toChild">click</button>
+    <el-button type="primary"  @click="toChild">click</el-button>
     <child ref="child"></child>
 
   </div>
@@ -103,7 +107,7 @@ export default {
     change: function () {
       this.flag = !this.flag
     },
-    submit: function () {
+    submm: function () {
       let map = {}
       map.username = this.username
       map.age = this.age
@@ -111,14 +115,15 @@ export default {
       this.age = ''
       this.items.push(map)
     },
-    finish: function (e, index) {
+    finish: function (index, row) {
+      console.log(index+":"+row.username+":"+row.age)
       let map = {}
-      map.username = e.username
-      map.age = e.age
+      map.username = row.username
+      map.age = row.age
       this.enditems.push(map)
       this.items.splice(index, 1)
     },
-    remove: function (e, index) {
+    remove: function (index, e) {
       let _this = this;
       console.log(e.username + e.age)
       let map = {}
@@ -219,10 +224,11 @@ export default {
     margin-top: 10px;
     height: 30px;
   }
-  button {
-    height: 30px;
-  }
+
   .clearitems {
     margin-top: 10px;
+  }
+  label {
+    margin-right: 15px;
   }
 </style>
