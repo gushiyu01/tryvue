@@ -7,66 +7,72 @@
     <label>age:</label><el-input v-model="age" placeholder="age" style="width:10%"></el-input>
     <el-button type="primary" v-on:click="submm">submit</el-button>
 
+    <el-row :gutter="20">
+      <el-col :span="12"><h1>待完成事件</h1>
+        <el-table
+          :data="items"
+          height="250"
+          border
+          style="width: 100%;margin: auto">
+          <el-table-column
+            type="selection"
+            width="55"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="username"
+            label="姓名"
+            width="180"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            prop="age"
+            label="年龄"
+            align="center">
+          </el-table-column>
+          <el-table-column
+            label="操作"
+            align="center">
+            <template slot-scope="scope">
+              <el-button type="primary"  v-on:click="finish(scope.$index, scope.row)">finish</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-button type="primary"  v-on:click="clearitems" class="clearitems">清空已选中待完成事件</el-button>
+      </el-col>
+      <el-col :span="12"><h1>已完成事件</h1>
+        <el-table
+          :data="enditems"
+          height="250"
+          border
+          style="width: 100%;margin: auto">
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
+          <el-table-column
+            prop="username"
+            label="姓名"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="age"
+            label="年龄">
+          </el-table-column>
+          <el-table-column
+            label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary"  v-on:click="remove(scope.$index, scope.row)">remove</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
 
-    <h1>待完成事件</h1>
-    <el-table
-      :data="items"
-      height="250"
-      border
-      style="width: 50%;margin: auto">
-      <el-table-column
-        type="selection"
-        width="55"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="username"
-        label="姓名"
-        width="180"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        prop="age"
-        label="年龄"
-        align="center">
-      </el-table-column>
-      <el-table-column
-        label="操作"
-        align="center">
-        <template slot-scope="scope">
-        <el-button type="primary"  v-on:click="finish(scope.$index, scope.row)">finish</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-button type="primary"  v-on:click="clearitems" class="clearitems">清空已选中待完成事件</el-button>
-    <h1>已完成事件</h1>
-    <el-table
-      :data="enditems"
-      height="250"
-      border
-      style="width: 50%;margin: auto">
-      <el-table-column
-        type="selection"
-        width="55">
-      </el-table-column>
-      <el-table-column
-        prop="username"
-        label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="age"
-        label="年龄">
-      </el-table-column>
-      <el-table-column
-        label="操作">
-        <template slot-scope="scope">
-          <el-button type="primary"  v-on:click="remove(scope.$index, scope.row)">remove</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+        <el-button type="primary"  v-on:click="clearenditems" class="clearitems">清空已完成事件</el-button>
+      </el-col>
+    </el-row>
 
-    <el-button type="primary"  v-on:click="clearenditems" class="clearitems">清空已完成事件</el-button>
+
+
 
     <head-name v-bind:headName="names"/>
 
